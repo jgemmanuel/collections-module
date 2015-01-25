@@ -1,0 +1,24 @@
+{
+  "name": "collections-module",
+  "version": "1.0.0",
+  "homepage": "https://github.com/mkota/collections-module",
+  "authors": [
+    "JG Emmanuel <jg.emmanuel@outlook.com>"
+  ],
+  "main": "server.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "font-awesome": "~4.3.0",
+    "jquery": "~2.1.3"
+  }
+}
