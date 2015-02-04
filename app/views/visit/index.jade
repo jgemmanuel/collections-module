@@ -1,0 +1,52 @@
+extends ../layouts/main
+
+block body
+  .container
+    h3= title
+    .row
+      form.form-horizontal.col-xs-6.panel.panel-default
+        .panel-body
+          fieldset
+            .form-group
+              label.control-label.col-xs-4 Collection Comment
+              .col-xs-8
+                textarea.form-control(rows="3" autofocus)
+            .form-group
+              label.control-label.col-xs-4 Next follow-up date
+              .col-xs-8
+                input.form-control(type="date" min="today" max="3000-01-01")
+            .form-group
+              label.control-label.col-xs-4 Work type
+              .col-xs-8
+                select.form-control
+                  option
+                  option Call
+                  option Online
+                  option Review
+            .form-group
+              label.control-label.col-xs-4 Claim number
+              .col-xs-8
+                input.form-control(type="text" placeholder="Claim number")
+            .form-group
+              label.control-label.col-xs-4 EOB date
+              .col-xs-8
+                input.form-control(type="date" max="today")
+            .form-group
+              label.control-label.col-xs-4 Check&thinsp;/&thinsp;EFT number
+              .col-xs-8
+                input.form-control(type="text" placeholder="")
+            .form-group
+              label.control-label.col-xs-4 Check&thinsp;/&thinsp;EFT date
+              .col-xs-8
+                input.form-control(type="date" min="2010-01-02")
+            .form-group
+              label.control-label.col-xs-4 Group number
+              .col-xs-8
+                input.form-control(type="text" placeholder="")
+            .form-group
+              .col-xs-8.col-xs-offset-4
+                button.btn.btn-primary.push-right(type="submit") Save
+      .col-xs-6
+        ul
+          li Claim number: #{claimNumber}
+          li EOB date: #{eobDate}
