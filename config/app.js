@@ -9,11 +9,13 @@ var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var cookieSession  = require('cookie-session');
 var stylus         = require('stylus');
+var compression    = require('compression');
 
 // other
 var packageJson    = require('../package.json');
 var env            = process.env.NODE_ENV || 'development';
 var port           = process.env.PORT || 3000;
+var oneDay         = 1e3*60*60*24; // milliseconds
 
 global.App = {
   app: express(),
@@ -76,7 +78,8 @@ App.app.use(cookieSession({secret: 'sghSecret', key: 'sgh-session'}));
 // App.app.use(App.middleware('attachCsrfToken')) // CSRF token
 // App.app.use(require('connect-flash')())
 // App.app.use(App.middleware('setFlash'))
-App.app.use(express.static(App.appPath('public')));
+App.app.use(compression());					      // compress response with gzip
+App.app.use(express.static(App.appPath('public'), {maxAge: oneDay})); // cache content for a day
 
 // Error middlewares
 // App.app.use(App.middleware('invalidCsrfToken'))

@@ -31,6 +31,33 @@ function updateDate(el) {
   };
 }
 
+function generateComment() {
+  var comment = document.getElementById('collectionComment').value;
+  var claimNumber = document.getElementById('claimNumber').value;
+  var eobDate = document.getElementById('eobDate').value;
+  var checkNumber = document.getElementById('checkNumber').value;
+  var checkDate = document.getElementById('checkDate').value;
+  var e = document.getElementsByClassName('modal-body')[0];
+  var tmpa = [];
+  var tmpb;
+  var tmpc = [];
+
+  tmpa = ['collectionComment', 'claimNumber', 'eobDate', 'checkNumber', 'checkDate'];
+
+  tmpa.forEach(function(el){
+    tmpb = document.getElementById(el).value;
+    if (tmpb) {
+      if (el === 'collectionComment') tmpc.push(tmpb);
+      if (el === 'claimNumber') tmpc.push('Claim #: ' + tmpb);
+      if (el === 'eobDate') tmpc.push('EOB date: ' + tmpb);
+      if (el === 'checkNumber') tmpc.push('Check / EFT #: ' + tmpb);
+      if (el === 'checkDate') tmpc.push('Check / EFT date: ' + tmpb);
+    }
+  })
+
+  e.innerHTML = tmpc.join('</br>');
+}
+
 window.onload = function() {
   updateDate('input');
 }
