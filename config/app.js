@@ -15,7 +15,7 @@ var compression    = require('compression');
 var packageJson    = require('../package.json');
 var env            = process.env.NODE_ENV || 'development';
 var port           = process.env.PORT || 3000;
-var oneDay         = 1e3*60*60*24; // milliseconds
+var oneDay         = 1e3*60*60*24; // milliseconds in a single day
 
 global.App = {
   app: express(),
@@ -35,6 +35,9 @@ global.App = {
       this.app.listen(this.port);
       console.log('Running App Version ' + App.version + ' on port ' + App.port + ' in ' + App.env + ' mode.');
     };
+  },
+  model: function(path) {
+    return this.require('app/models/' + path)
   },
   route: function(path) {
     return this.require('app/routes/' + path);
@@ -85,6 +88,6 @@ App.app.use(express.static(App.appPath('public'), {maxAge: oneDay})); // cache c
 // App.app.use(App.middleware('invalidCsrfToken'))
 
 // Bootstrap the db
-// App.require('config/database')(process.env.DATABASE_URL || 'mongodb://localhost/node_test')
+App.require('config/database')(process.env.DATABASE_URL || 'mongodb://localhost/test')
 
 App.require('config/routes')(App.app);
