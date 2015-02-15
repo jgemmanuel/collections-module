@@ -52,6 +52,21 @@ function generateComment() {
   e.innerHTML = tmpc.join('</br>');
 }
 
+function addTableRow() {
+  var tableBody = document.getElementsByTagName('tbody')[0];
+  var tableRow = '<tr><td><input type="text" class="form-control"></td><td><input type="text" class="form-control"></td></tr>';
+
+  tableBody.innerHTML += tableRow;
+}
+
+function removeTableRow() {
+  var tableBody = document.getElementsByTagName('tbody')[0];
+  var arr = tableBody.innerHTML.split('</tr>');
+
+  arr.splice(arr.length-2, 1);	// compensate for the empty string at end
+  tableBody.innerHTML = arr.join('</tr>');
+}
+
 window.onload = function() {
   updateDate('input');
 }
