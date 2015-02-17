@@ -1,0 +1,37 @@
+extends ../layouts/main
+
+block body
+  .container
+    .row
+      .col-xs-10
+        h3 Visit #{visit.visitNumber}
+      .col-xs-2
+        h3.bill-type.federal= visit.bill_type
+    br
+    .col-xs-6
+      .panel.panel-default
+        .panel-body
+          table.table
+            thead
+              tr
+                th CPT
+                th Charge
+                th Status
+            tbody
+              // each line in lines
+              //   tr
+              //     td #{line.cpt}
+              //     td #{line.charge}
+              //     td #{line.status}
+
+      .panel.panel-default
+        .panel-body
+          p Claim balance:
+          p PR amount:
+
+    .col-xs-6
+      .panel.panel-default
+        .panel-body
+          p Primary:
+          p Contact number:
+          p Portal URI:

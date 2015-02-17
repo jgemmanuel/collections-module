@@ -1,0 +1,52 @@
+extends ../layouts/main
+
+block body
+  .container
+    h3= title
+    br
+    form.form-horizontal(action="/visits/create" method="POST")
+      fieldset
+        .panel.panel-default.row
+          .panel-body
+            .col-xs-6
+              table.table.table-bordered.table-condensed
+                thead
+                  tr
+                    th CPT code
+                    th Charge ($)
+
+                tbody
+                  tr
+                    td: input.form-control(type="text" name="cpt")
+                    td: input.form-control(type="text" name="unitCharge")
+              button.btn.btn-default.btn-sm(type="button" onclick="addTableRow()") Add Line
+              button.btn.btn-default.btn-sm(type="button" onclick="removeTableRow()") Remove Line
+
+            .col-xs-6
+              .form-group
+                label.control-label.col-xs-5 Visit Number
+                .col-xs-7
+                  input.form-control(type="text" name="visitNumber")
+              .form-group
+                label.control-label.col-xs-5 Carrier
+                .col-xs-7
+                  select.form-control(name="carrier")
+                    option(selected)
+                    option Test 1
+                    option Test 2
+              .form-group
+                label.control-label.col-xs-5 Billing Type
+                .col-xs-7
+                  select.form-control(name="billType")
+                    option(selected)
+                    option Federal
+                    option Commercial
+                    option Worker's Compensation
+              .form-group
+                label.control-label.col-xs-5 Specimen Code
+                .col-xs-7
+                  input.form-control(type="text" name="specimenCode")
+        .form-group.pull-right
+
+          button.btn.btn-default(type="button") Save
+          button.btn.btn-default(type="submit") Done

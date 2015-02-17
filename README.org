@@ -1,0 +1,9 @@
+* TMP: Insurance sequance
+
+primary, secondary, tertiary, quaternary, quinary, senary, septenary, octonary, nonary, and denary.
+
+* Dependencies
+
+  - [[http://nodejs.org/][Node.js]]
+  - =npm=
+  - [[http://www.mongodb.org/downloads][MongoDB]]

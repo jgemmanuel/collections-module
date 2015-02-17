@@ -1,0 +1,13 @@
+extends ../layouts/main
+
+block body
+  .container
+    h3= title
+    br
+    .well
+      ul
+        li List of visits; ordered by carrier, visit, billing type, etc.
+        li Queue system; review stack, online stack, and call stack.
+    ul
+      each visit in visits
+        li= visit

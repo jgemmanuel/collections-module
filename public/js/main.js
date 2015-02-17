@@ -53,8 +53,9 @@ function generateComment() {
 }
 
 function addTableRow() {
+  var i = 1;
   var tableBody = document.getElementsByTagName('tbody')[0];
-  var tableRow = '<tr><td><input type="text" class="form-control"></td><td><input type="text" class="form-control"></td></tr>';
+  var tableRow = '<tr><td><input type="text" class="form-control" name="cpt"></td><td><input type="text" class="form-control" name="unitCharge"></td></tr>';
 
   tableBody.innerHTML += tableRow;
 }
