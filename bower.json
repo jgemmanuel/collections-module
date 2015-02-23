@@ -21,6 +21,9 @@
     "font-awesome": "~4.3.0",
     "jquery": "~2.1.3",
     "jquery-maskedinput-with-hint": "*",
-    "roboto-fontface": "~0.2.7"
+    "roboto-fontface": "~0.2.7",
+    "bootstrap-table": "~1.6.0",
+    "bootflat": "*",
+    "flat-ui": "~2.2.2"
   }
 }

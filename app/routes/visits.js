@@ -34,11 +34,14 @@ function edit(req, res) {
 
 function create(req, res, next) {
   console.log(req.body);
+  var tmp = req.body;
   var v = new Visit({
-    visitNumber: req.body.visitNumber,
-    carrier: req.body.carrier,
-    lines: req.body.lines,
-    billType: req.body.billType
+    visitNumber: tmp.visitNumber,
+    billType: tmp.billType,
+    cpt: tmp.cpt,
+    unitCharge: tmp.unitCharge,
+    // carrier: tmp.carrierName[0], // TODO: include secondary et al.
+    specimenCode: tmp.specimenCode
   });
 
   v.markModified('lines');

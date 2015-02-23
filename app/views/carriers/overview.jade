@@ -1,0 +1,25 @@
+extends ../layouts/main
+
+block body
+  .container
+    h3= title
+    .row
+      form.form-horizontal.col-xs-6.panel.panel-default
+        .panel-body
+          fieldset
+            legend Edit Carrier Details
+            .form-group
+              label.control-label.col-xs-4 Insurance phone number
+              .col-xs-8
+                input.form-control(type="tel")
+            .form-group
+              label.control-label.col-xs-4 Provider portal URL
+              .col-xs-8
+                input.form-control(type="url" placeholder="")
+            .form-group
+              .col-xs-8.col-xs-offset-4
+                button.btn.btn-primary.push-right(type="submit") Save
+      .col-xs-6
+        ul
+          li Payer Nuances
+          li Mailing&thinsp;/&thinsp;fax details

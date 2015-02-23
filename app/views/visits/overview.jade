@@ -6,32 +6,66 @@ block body
       .col-xs-10
         h3 Visit #{visit.visitNumber}
       .col-xs-2
-        h3.bill-type.federal= visit.bill_type
+        h3.bill-type.federal= visit.billType
     br
     .col-xs-6
       .panel.panel-default
-        .panel-body
-          table.table
-            thead
+        .panel-heading Claim
+        table.table.table-hover
+          thead
+            tr
+              th CPT
+              th Charge
+              th Status
+          tbody
+            each cpt,index in visit.cpt
               tr
-                th CPT
-                th Charge
-                th Status
-            tbody
-              // each line in lines
-              //   tr
-              //     td #{line.cpt}
-              //     td #{line.charge}
-              //     td #{line.status}
-
-      .panel.panel-default
+                td #{cpt}
+                td #{visit.unitCharge[index]}
+                td TODO
         .panel-body
           p Claim balance:
           p PR amount:
 
-    .col-xs-6
       .panel.panel-default
+        .panel-heading Carrier
         .panel-body
-          p Primary:
+          each c in visit.carrier
+            p Carrier: #{c}
           p Contact number:
           p Portal URI:
+
+      .panel.panel-default
+        .panel-heading Other
+        .panel-body
+          p Specimen code: #{visit.specimenCode}
+
+    .col-xs-6
+
+      // if visit.archive.created
+        .panel.panel-default
+          .panel-heading Archive
+          .panel-body
+            p Appealed date
+            p Appealed carrier
+            p Medium (fax&thinsp;/&thinsp;mail, etc.)
+
+      .panel.panel-default
+        .panel-heading Follow-up Notes
+        .panel-group(id="comments" role="tablist" aria-multiselectable="true")
+          .panel.panel-default
+            .panel-heading(role="tab" id="heading-1")
+              h4.panel-title
+                a(data-toggle="collapse" data-parent="#comments" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1")
+                  | Comment 1
+            .panel-collapse.collapse.in(id="collapse-1" role="tabpanel" aria-labelledby="heading-1")
+              .panel-body
+                | Blah
+          .panel.panel-default
+            .panel-heading(role="tab" id="heading-2")
+              h4.panel-title
+                a.collapsed(data-toggle="collapse" data-parent="#comments" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2")
+                  | Comment 2
+            .panel-collapse.collapse(id="collapse-2" role="tabpanel" aria-labelledby="heading-2")
+              .panel-body
+                | Blah

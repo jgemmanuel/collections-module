@@ -28,12 +28,29 @@ block body
                 .col-xs-7
                   input.form-control(type="text" name="visitNumber")
               .form-group
-                label.control-label.col-xs-5 Carrier
+                label.control-label.col-xs-5 Primary Carrier
                 .col-xs-7
-                  select.form-control(name="carrier")
+                  select.form-control(name="carrierName")
                     option(selected)
                     option Test 1
                     option Test 2
+                    option Test 3
+              .form-group
+                label.control-label.col-xs-5 Secondary Carrier
+                .col-xs-7
+                  select.form-control(name="carrierName")
+                    option(selected)
+                    option Test 1
+                    option Test 2
+                    option Test 3
+              .form-group
+                label.control-label.col-xs-5 Tertiary Carrier
+                .col-xs-7
+                  select.form-control(name="carrierName")
+                    option(selected)
+                    option Test 1
+                    option Test 2
+                    option Test 3
               .form-group
                 label.control-label.col-xs-5 Billing Type
                 .col-xs-7
