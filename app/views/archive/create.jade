@@ -1,25 +1,30 @@
 extends ../layouts/main
 
+append vendorScripts
+  script(src="/components/ckeditor/ckeditor.js")
+
 block body
   .container
-    h3= title
-    br
-    form.form-horizontal
+    h3.page-header= title
+    form.form-horizontal(action="/archive/"+visitNumber method="POST")
       fieldset
         .panel.panel-default.row
-            .panel-body
-              .col-xs-6
-                p Insert text editing feature here.
+          .panel-body
 
-              .col-xs-6
-                .form-group
-                  label.control-label.col-xs-5 Document Type
-                  .col-xs-7
-                    select.form-control
-                      option(selected) Appeal
-                      option Medical Records
-                      option W-9
+            .col-xs-6
+              textarea.ckeditor(name="editor")
+
+            .col-xs-6
+              .form-group
+                label.control-label.col-xs-5 Document Type
+                .col-xs-7
+                  select.form-control(name="type")
+                    option
+                    option Appeal
+                    option Medical Records
+                    option W-9
+              .form-group
+                label.control-label.col-xs-5 Carrier
 
         .form-group.pull-right
-          button.btn.btn-default(type="submit") Save
           button.btn.btn-default(type="submit") Create

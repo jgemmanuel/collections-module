@@ -3,44 +3,41 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var localCarrierSchema = new Schema({
+  name: String,
+  cob: String,
+  claimNumber: {type: String, trim: true},
+  eobDate: Date,
+  checkNumber: {type: Number, trim: true},
+  checkDate: Date
+  // paid lines
+});
+
+var localArchiveSchema = new Schema({
+  author: String,
+  document: String,
+  created: {type: Date, default: Date.now},
+  modified: Date
+});
+
+var Comment = new Schema({
+  author: String,
+  body: String,
+  created: {type: Date, default: Date.now},
+  modified: Date
+});
+
 var visitSchema = new Schema({
-  visitNumber: {
-    type: Number,
-    required: true,
-    unique: false
-  },
-  specimenCode: Number,
+  visitNumber: {type: Number, required: true, unique: true, trim: true},
+  specimenCode: {type: Number, trim: true},
   billType: String,
-  cpt: [String],
-  unitCharge: [String],
-  carrier: [{
-    name: String,
-    cob: String,
-    claimNumber: String,
-    eobDate: Date,
-    checkNumber: Number,
-    checkDate: Date,
-  }],
-  archive: [{
-    author: String,
-    document: String,
-    created: Date,
-    modified: Date
-  }],
-  comments: [{
-    author: String,
-    body: String,
-    created: Date,
-    modified: Date
-  }],
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  modified: [{
-    type: Date,
-    author: String
-  }]
+  cpt: [{type: String, trim: true}],
+  unitCharge: [{type: String, trim: true}],
+  carrier: [localCarrierSchema],
+  archive: [localArchiveSchema],
+  comments: [Comment],
+  created: {type: Date, default: Date.now},
+  modified: [{type: Date, author: String}]
 });
 
 // // assign a function to the "statics" object of our animalSchema

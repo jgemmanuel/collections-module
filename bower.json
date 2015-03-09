@@ -24,6 +24,7 @@
     "roboto-fontface": "~0.2.7",
     "bootstrap-table": "~1.6.0",
     "bootflat": "*",
-    "flat-ui": "~2.2.2"
+    "flat-ui": "~2.2.2",
+    "ckeditor": "~4.4.7"
   }
 }

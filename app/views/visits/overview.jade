@@ -2,12 +2,17 @@ extends ../layouts/main
 
 block body
   .container
-    .row
+    .row.page-header
       .col-xs-10
         h3 Visit #{visit.visitNumber}
       .col-xs-2
-        h3.bill-type.federal= visit.billType
-    br
+        - if (visit.billType == 'Federal')
+          h3.bill-type.federal= visit.billType
+        - if (visit.billType == 'Commercial')
+          h3.bill-type.commercial= visit.billType
+        - if (visit.billType == 'Workers Compenstaion')
+          h3.bill-type.workers-compensation= visit.billType
+
     .col-xs-6
       .panel.panel-default
         .panel-heading Claim
@@ -24,7 +29,7 @@ block body
                 td #{visit.unitCharge[index]}
                 td TODO
         .panel-body
-          p Claim balance:
+          p Total remaining claim balance:
           p PR amount:
 
       .panel.panel-default
@@ -34,6 +39,7 @@ block body
             p Carrier: #{c}
           p Contact number:
           p Portal URI:
+          p COB:
 
       .panel.panel-default
         .panel-heading Other
@@ -42,7 +48,7 @@ block body
 
     .col-xs-6
 
-      // if visit.archive.created
+      if visit.archive.created
         .panel.panel-default
           .panel-heading Archive
           .panel-body
@@ -50,22 +56,16 @@ block body
             p Appealed carrier
             p Medium (fax&thinsp;/&thinsp;mail, etc.)
 
-      .panel.panel-default
-        .panel-heading Follow-up Notes
-        .panel-group(id="comments" role="tablist" aria-multiselectable="true")
+      .panel-group(id="comments" role="tablist" aria-multiselectable="true")
+        - var comments = [{created: 'TODO', author: 'TODO'}, {created: 'TODO', author: 'TODO'}];
+        for comment,index in comments
           .panel.panel-default
-            .panel-heading(role="tab" id="heading-1")
+            .panel-heading(role="tab" id="heading-"+index)
               h4.panel-title
-                a(data-toggle="collapse" data-parent="#comments" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1")
-                  | Comment 1
-            .panel-collapse.collapse.in(id="collapse-1" role="tabpanel" aria-labelledby="heading-1")
+                a.collapsed(data-toggle="collapse" data-parent="#comments" href="#collapse-"+index aria-expanded="false" aria-controls="collapse-"+index)
+                  | #{comment.created}&nbsp;
+                  span.glyphicon.glyphicon-chevron-down.small(aria-hidden="true")
+                p.pull-right #{comment.author}
+            .panel-collapse.collapse(id="collapse-"+index role="tabpanel" aria-labelledby="heading-"+index)
               .panel-body
-                | Blah
-          .panel.panel-default
-            .panel-heading(role="tab" id="heading-2")
-              h4.panel-title
-                a.collapsed(data-toggle="collapse" data-parent="#comments" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2")
-                  | Comment 2
-            .panel-collapse.collapse(id="collapse-2" role="tabpanel" aria-labelledby="heading-2")
-              .panel-body
-                | Blah
+                | Comment #{index}
