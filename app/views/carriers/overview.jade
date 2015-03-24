@@ -2,24 +2,29 @@ extends ../layouts/main
 
 block body
   .container
-    h3= title
-    .row
-      form.form-horizontal.col-xs-6.panel.panel-default
+    h3.page-header #{carrier.name}
+
+    .col-xs-6
+
+      .panel.panel-default
+        .panel-heading Description
         .panel-body
-          fieldset
-            legend Edit Carrier Details
-            .form-group
-              label.control-label.col-xs-4 Insurance phone number
-              .col-xs-8
-                input.form-control(type="tel")
-            .form-group
-              label.control-label.col-xs-4 Provider portal URL
-              .col-xs-8
-                input.form-control(type="url" placeholder="")
-            .form-group
-              .col-xs-8.col-xs-offset-4
-                button.btn.btn-primary.push-right(type="submit") Save
-      .col-xs-6
-        ul
-          li Payer Nuances
-          li Mailing&thinsp;/&thinsp;fax details
+          p #{carrier.description}
+
+      if !carrier.nuances
+        .panel.panel-default
+          .panel-heading Carrier Nuances
+          .panel-body
+            each nuance in carrier.nuances
+              p #{nuance}
+
+    .col-xs-6
+
+      .panel.panel-default
+        .panel-heading Provider Portal
+        .panel-body
+          p #{carrier.providerPortal}
+
+      .panel.panel-default
+        .panel-heading Phone Numbers
+        .panel-body

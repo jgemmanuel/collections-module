@@ -8,14 +8,14 @@ function todaysDate() {
 function checkSettings() {
   // *** Function incomplete
   //
-  var cookieStatus;
+  var msg;
 
-  if (navigator.cookieEnabled == true)
-    cookieStatus = 'Cookies are enabled.';
-  else
-    cookieStatus = 'Cookies are not enabled.';
+  if (!navigator.cookieEnabled) {
+    msg = 'Cookies are currently disabled. Please enable cookies.';
 
-  document.getElementById('demo').innerHTML = cookieStatus;
+    // document.getElementById('demo').innerHTML = cookieStatus;
+    console.log(msg);
+  }
 }
 
 function updateDate(el) {
@@ -23,6 +23,7 @@ function updateDate(el) {
   // 'today' and replaces it with today's date.
   var i, tmpa;
   tmpa = document.getElementsByTagName(el);
+
   for (i = 0; i < tmpa.length; i++) { // TODO: improve loop
     if (tmpa[i].min === 'today')
       tmpa[i].min = todaysDate();
@@ -52,11 +53,9 @@ function generateComment() {
   e.innerHTML = tmpc.join('</br>');
 }
 
+var tableBody = document.getElementsByTagName('tbody')[0];
+var tableRow = tableBody.innerHTML;
 function addTableRow() {
-  var i = 1;
-  var tableBody = document.getElementsByTagName('tbody')[0];
-  var tableRow = '<tr><td><input type="text" class="form-control" name="cpt"></td><td><input type="text" class="form-control" name="unitCharge"></td></tr>';
-
   tableBody.innerHTML += tableRow;
 }
 
@@ -69,5 +68,6 @@ function removeTableRow() {
 }
 
 window.onload = function() {
+  checkSettings();
   updateDate('input');
 }

@@ -8,10 +8,13 @@ function VisitsRoutes(app) {
   visitsRouter.route('/')
     .get(visitsRoute.index);
   visitsRouter.route('/create')
-    .get(visitsRoute.addNew)
-    .post(visitsRoute.create);
+    .get(visitsRoute.createGet)
+    .post(visitsRoute.createPost);
   visitsRouter.route('/:visitNumber')
-    .get(visitsRoute.edit);
+    .get(visitsRoute.overview);
+  visitsRouter.route('/:visitNumber/edit')
+    .get(visitsRoute.editGet)
+    .post(visitsRoute.editPost);
   app.use('/visits', visitsRouter);
 };
 

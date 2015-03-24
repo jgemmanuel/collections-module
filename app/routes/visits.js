@@ -16,7 +16,7 @@ function index(req, res) {
   });
 }
 
-function edit(req, res) {
+function overview(req, res) {
   var visitNumber = req.params.visitNumber;
   Visit.find({visitNumber: visitNumber}, function(err, v){
     if (err) throw err;
@@ -32,7 +32,66 @@ function edit(req, res) {
   });
 }
 
-function create(req, res, next) {
+function editGet(req, res) {
+  var visitNumber = req.params.visitNumber;
+  res.render('visits/edit', {
+    title: 'Edit Visit ' + visitNumber,
+    visitNumber: visitNumber
+  })
+}
+
+function editPost(req, res) {
+  console.log(req.body)
+  var visitNumber = req.params.visitNumber;
+  Visit.findOneAndUpdate({visitNumber: visitNumber}, {
+    comments: {
+      author: '',
+      body: req.body.comment,
+      created: Date.now,
+      modified: Date.now
+    },
+    carrier: {
+      name: '',
+      cob: '',
+      claimNumber: req.body.claimNumber,
+      eobDate: req.body.eobDate,
+      checkNumber: req.body.checkNumber,
+      checkDate: req.body.checkDate
+    }
+  }, function(err, visit) {
+    if (err) throw err;
+
+    res.redirect('back');
+  })
+}
+
+function createGet(req, res) {
+  Visit.find(function(err, visits) {
+    if (err) throw err;
+
+    if (!visits) console.log('No visits found!');
+
+    Carrier.find(function(err, carriers) {
+      var tmp;
+      if (err) throw err;
+      if (!carriers) console.log('No carriers found!');
+
+      tmp = [];
+      carriers.forEach(function(carrier) {
+	tmp.push(carrier.name);
+      })
+
+      res.render('visits/create', {
+	title: 'Create Visits',
+	visits: visits,
+	carrierNames: tmp
+      });
+
+    });
+  });
+}
+
+function createPost(req, res) {
   console.log(req.body);
   var tmp = req.body;
   var v = new Visit({
@@ -53,15 +112,11 @@ function create(req, res, next) {
   })
 }
 
-function addNew(req, res) {
-  res.render('visits/create', {
-    title: 'Create Visit'
-  });
-}
-
 module.exports = {
   index: index,
-  create: create,
-  edit: edit,
-  addNew: addNew
+  overview: overview,
+  editGet: editGet,
+  editPost: editPost,
+  createGet: createGet,
+  createPost: createPost
 }

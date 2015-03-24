@@ -1,25 +1,24 @@
 extends ../layouts/main
 
+append vendorStyles
+  link(href="/components/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet")
+
+append vendorScripts
+  script(src="/components/bootstrap-table/dist/bootstrap-table.min.js")
+
 block body
   .container
-    h3= title
-    .row
-      form.form-horizontal.col-xs-6.panel.panel-default
-        .panel-body
-          fieldset
-            legend Edit Carrier Details
-            .form-group
-              label.control-label.col-xs-4 Insurance phone number
-              .col-xs-8
-                input.form-control(type="tel")
-            .form-group
-              label.control-label.col-xs-4 Provider portal URL
-              .col-xs-8
-                input.form-control(type="url" placeholder="")
-            .form-group
-              .col-xs-8.col-xs-offset-4
-                button.btn.btn-primary.push-right(type="submit") Save
-      .col-xs-6
-        ul
-          li Payer Nuances
-          li Mailing&thinsp;/&thinsp;fax details
+    h3.page-header= title
+    table(data-toggle="table" data-height="550" data-pagination="true" data-page-list="[10, 20, 50, 100, 200]" data-search="true" data-show-columns="true" data-show-refresh="false" data-show-toggle="false" data-click-to-select="false" data-maintain-selected="true")
+      thead
+        tr
+          th(data-checkbox="true")
+          th(data-sortable="true") Carrier Name
+          th(data-sortable="true") Claims Address
+      tbody
+        each carrier in carriers
+          tr
+            td
+            td
+              a(href="/carriers/"+carrier.name)= carrier.name
+            td= carrier.addresses

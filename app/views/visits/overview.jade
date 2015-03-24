@@ -15,34 +15,49 @@ block body
 
     .col-xs-6
       .panel.panel-default
-        .panel-heading Claim
+        .panel-heading Claim Information
         table.table.table-hover
           thead
             tr
               th CPT
               th Charge
               th Status
+              th Code
           tbody
             each cpt,index in visit.cpt
               tr
                 td #{cpt}
                 td #{visit.unitCharge[index]}
-                td TODO
+                td #{visit.status[index]}
+                td #{visit.code[index]}
         .panel-body
           p Total remaining claim balance:
           p PR amount:
 
       .panel.panel-default
-        .panel-heading Carrier
+        .panel-heading Carrier Information
+        table.table.table-hover
+          thead
+            tr
+              th Carrier Name
+              th COB
+              th Provider Portal URI
+              th Contact Numbers
+            each carrier in visit.carrier
+              tr
+                td
+                  a(href="/carriers/"+carrier.name) #{carrier.name}
+                td #{carrier.cob}
+                td
+                td
         .panel-body
-          each c in visit.carrier
-            p Carrier: #{c}
-          p Contact number:
-          p Portal URI:
-          p COB:
+          p Primary claim number:  #{visit.carrier[0].claimNumber}
+          p Primary check number:  #{visit.carrier[0].checkNumber}
+          p Primary EOB date:  #{visit.carrier[0].eobDate}
+          p Primary check date:  #{visit.carrier[0].checkDate}
 
       .panel.panel-default
-        .panel-heading Other
+        .panel-heading Additional Information
         .panel-body
           p Specimen code: #{visit.specimenCode}
 
@@ -57,15 +72,15 @@ block body
             p Medium (fax&thinsp;/&thinsp;mail, etc.)
 
       .panel-group(id="comments" role="tablist" aria-multiselectable="true")
-        - var comments = [{created: 'TODO', author: 'TODO'}, {created: 'TODO', author: 'TODO'}];
-        for comment,index in comments
+        // - var comments = [{created: 'TODO', author: 'TODO'}, {created: 'TODO', author: 'TODO'}];
+        each comment,index in visit.comments
           .panel.panel-default
             .panel-heading(role="tab" id="heading-"+index)
               h4.panel-title
                 a.collapsed(data-toggle="collapse" data-parent="#comments" href="#collapse-"+index aria-expanded="false" aria-controls="collapse-"+index)
-                  | #{comment.created}&nbsp;
+                  | #{comment.modified}&nbsp;
                   span.glyphicon.glyphicon-chevron-down.small(aria-hidden="true")
                 p.pull-right #{comment.author}
             .panel-collapse.collapse(id="collapse-"+index role="tabpanel" aria-labelledby="heading-"+index)
               .panel-body
-                | Comment #{index}
+                | #{comment.body}

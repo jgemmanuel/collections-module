@@ -1,3 +1,28 @@
+// extends ../layouts/main
+
+// block body
+//   .container
+//     h3= title
+//     .row
+//       form.form-horizontal.col-xs-6.panel.panel-default
+//         .panel-body
+//           fieldset
+//             legend Edit Carrier Details
+//             .form-group
+//               label.control-label.col-xs-4 Insurance phone number
+//               .col-xs-8
+//                 input.form-control(type="tel")
+//             .form-group
+//               label.control-label.col-xs-4 Provider portal URL
+//               .col-xs-8
+//                 input.form-control(type="url" placeholder="")
+//             .form-group
+//               .col-xs-8.col-xs-offset-4
+//                 button.btn.btn-primary.push-right(type="submit") Save
+//       .col-xs-6
+//         ul
+//           li Payer Nuances
+//           li Mailing&thinsp;/&thinsp;fax details
 extends ../layouts/main
 
 block body
@@ -31,22 +56,25 @@ block body
                 .col-xs-7
                   select.form-control(name="carrierName")
                     option(selected)
-                    each name in carrierNames
-                      option #{name}
+                    option Test 1
+                    option Test 2
+                    option Test 3
               .form-group
                 label.control-label.col-xs-5 Secondary Carrier
                 .col-xs-7
                   select.form-control(name="carrierName")
                     option(selected)
-                    each name in carrierNames
-                      option #{name}
+                    option Test 1
+                    option Test 2
+                    option Test 3
               .form-group
                 label.control-label.col-xs-5 Tertiary Carrier
                 .col-xs-7
                   select.form-control(name="carrierName")
                     option(selected)
-                    each name in carrierNames
-                      option #{name}
+                    option Test 1
+                    option Test 2
+                    option Test 3
               .form-group
                 label.control-label.col-xs-5 Billing Type
                 .col-xs-7
@@ -61,5 +89,5 @@ block body
                   input.form-control(type="text" name="specimenCode")
         .form-group.pull-right
 
-          button.btn.btn-default.disabled(type="button") Save
+          button.btn.btn-default(type="button") Save
           button.btn.btn-default(type="submit") Done

@@ -1,17 +1,18 @@
 'use strict'
 
 var express = require('express');
-var custom = App.require('custom');
+var routeHandlers = App.route('carriers');
 
 function CarriersRoutes(app) {
   var carriersRouter = express.Router();
   carriersRouter.route('/')
-    .get(CarriersRoute);
+    .get(routeHandlers.index);
+  carriersRouter.route('/create')
+    .get(routeHandlers.createGet)
+    .post(routeHandlers.createPost);
+  carriersRouter.route('/:carrierName')
+    .get(routeHandlers.overview);
   app.use('/carriers', carriersRouter);
 }
 
 module.exports = CarriersRoutes;
-
-function CarriersRoute(req, res) {
-  res.render('carriers/index', {title: 'Carrier Overview'});
-};

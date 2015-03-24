@@ -9,13 +9,13 @@ append vendorScripts
 block body
   .container
     h3.page-header= title
-    table(data-toggle="table" data-height="550" data-pagination="true" data-page-list="[10, 20, 50, 100, 200]" data-search="true" data-show-columns="true" data-show-refresh="true" data-show-toggle="true" data-click-to-select="true" data-maintain-selected="true")
+    table(data-toggle="table" data-height="550" data-pagination="true" data-page-list="[10, 20, 50, 100, 200]" data-search="true" data-show-columns="true" data-show-refresh="false" data-show-toggle="false" data-click-to-select="false" data-maintain-selected="true")
       thead
         tr
           th(data-checkbox="true")
           th(data-sortable="true") Visit
           th(data-sortable="true") Created date and time
-          th(data-sortable="true") Specimen Code
+          th(data-sortable="true") Archived
           th(data-sortable="true") Bill Type
       tbody
         each visit in visits
@@ -24,5 +24,5 @@ block body
             td
               a(href="/visits/"+visit.visitNumber)= visit.visitNumber
             td= visit.created
-            td= visit.specimenCode
+            td= visit.archive
             td= visit.billType

@@ -33,6 +33,8 @@ var visitSchema = new Schema({
   billType: String,
   cpt: [{type: String, trim: true}],
   unitCharge: [{type: String, trim: true}],
+  status: [String],
+  code: [String],
   carrier: [localCarrierSchema],
   archive: [localArchiveSchema],
   comments: [Comment],

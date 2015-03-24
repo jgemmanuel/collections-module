@@ -10,6 +10,7 @@ var methodOverride = require('method-override');
 var cookieSession  = require('cookie-session');
 var stylus         = require('stylus');
 var compression    = require('compression');
+var favicon        = require('serve-favicon');
 
 // other
 var packageJson    = require('../package.json');
@@ -83,6 +84,7 @@ App.app.use(cookieSession({secret: 'sghSecret', key: 'sgh-session'}));
 // App.app.use(App.middleware('setFlash'))
 App.app.use(compression());					      // compress response with gzip
 App.app.use(express.static(App.appPath('public'), {maxAge: oneDay})); // cache content for a day
+App.app.use(favicon(App.appPath('public/images/favicon.ico')));
 
 // Error middlewares
 // App.app.use(App.middleware('invalidCsrfToken'))
