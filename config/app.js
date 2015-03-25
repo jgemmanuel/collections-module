@@ -90,7 +90,7 @@ App.app.use(favicon(App.appPath('public/images/favicon.ico')));
 // App.app.use(App.middleware('invalidCsrfToken'))
 
 // Bootstrap the db
-App.require('config/database')(process.env.DATABASE_URL || 'mongodb://localhost/test')
-// App.require('config/database')(process.env.MONGOLAB_URI || 'mongodb://localhost/test')
+// App.require('config/database')(process.env.DATABASE_URL || 'mongodb://localhost/test')
+App.require('config/database')(process.env.MONGOLAB_URI || 'mongodb://localhost/test')
 
 App.require('config/routes')(App.app);
