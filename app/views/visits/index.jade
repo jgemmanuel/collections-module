@@ -14,15 +14,18 @@ block body
         tr
           th(data-checkbox="true")
           th(data-sortable="true") Visit
-          th(data-sortable="true") Created date and time
-          th(data-sortable="true") Archived
+          th(data-sortable="true") Carriers
           th(data-sortable="true") Bill Type
+          th(data-sortable="true") Archived
       tbody
         each visit in visits
           tr
             td
             td
               a(href="/visits/"+visit.visitNumber)= visit.visitNumber
-            td= visit.created
-            td= visit.archive
+            td= visit.carrier
             td= visit.billType
+            if visit.archived
+              td Yes
+            else
+              td No

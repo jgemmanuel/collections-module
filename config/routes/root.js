@@ -12,5 +12,5 @@ function RootRoutes(app) {
 module.exports = RootRoutes;
 
 function HomeRoute(req, res) {
-  res.render('home', {title: 'Claim View'});
+  res.render('home', {title: 'Dashboard'});
 };

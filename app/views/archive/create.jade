@@ -25,6 +25,11 @@ block body
                     option W-9
               .form-group
                 label.control-label.col-xs-5 Carrier
+                .col-xs-7
+                  select.form-control(name="carrier")
+                    option
+                    each carrier in carriers
+                      option #{carrier}
 
         .form-group.pull-right
           button.btn.btn-default(type="submit") Create

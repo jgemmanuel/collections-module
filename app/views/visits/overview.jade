@@ -22,14 +22,12 @@ block body
               th CPT
               th Charge
               th Status
-              th Code
           tbody
             each cpt,index in visit.cpt
               tr
                 td #{cpt}
                 td #{visit.unitCharge[index]}
                 td #{visit.status[index]}
-                td #{visit.code[index]}
         .panel-body
           p Total remaining claim balance:
           p PR amount:
@@ -41,20 +39,19 @@ block body
             tr
               th Carrier Name
               th COB
-              th Provider Portal URI
-              th Contact Numbers
-            each carrier in visit.carrier
+              th Effective Dates
+            each carrier, index in visit.carrier.filter(Boolean)
               tr
                 td
-                  a(href="/carriers/"+carrier.name) #{carrier.name}
-                td #{carrier.cob}
+                  a(href="/carriers/"+carrier) #{carrier}
+                - if (visit.cob[index] == 0)
+                  td Primary
+                - else if (visit.cob[index] == 1)
+                  td Secondary
+                - else if (visit.cob[index] == 2)
+                  td Tertiary
                 td
-                td
-        .panel-body
-          p Primary claim number:  #{visit.carrier[0].claimNumber}
-          p Primary check number:  #{visit.carrier[0].checkNumber}
-          p Primary EOB date:  #{visit.carrier[0].eobDate}
-          p Primary check date:  #{visit.carrier[0].checkDate}
+        // .panel-body
 
       .panel.panel-default
         .panel-heading Additional Information
@@ -63,7 +60,7 @@ block body
 
     .col-xs-6
 
-      if visit.archive.created
+      if visit.archived
         .panel.panel-default
           .panel-heading Archive
           .panel-body
@@ -72,15 +69,22 @@ block body
             p Medium (fax&thinsp;/&thinsp;mail, etc.)
 
       .panel-group(id="comments" role="tablist" aria-multiselectable="true")
-        // - var comments = [{created: 'TODO', author: 'TODO'}, {created: 'TODO', author: 'TODO'}];
-        each comment,index in visit.comments
+        for comment, index in comments
           .panel.panel-default
             .panel-heading(role="tab" id="heading-"+index)
               h4.panel-title
                 a.collapsed(data-toggle="collapse" data-parent="#comments" href="#collapse-"+index aria-expanded="false" aria-controls="collapse-"+index)
-                  | #{comment.modified}&nbsp;
+                  | #{comment.modified.toDateString()}&nbsp;
                   span.glyphicon.glyphicon-chevron-down.small(aria-hidden="true")
                 p.pull-right #{comment.author}
             .panel-collapse.collapse(id="collapse-"+index role="tabpanel" aria-labelledby="heading-"+index)
               .panel-body
-                | #{comment.body}
+                p #{comment.body}
+                if comment.claimNumber
+                  p Claim number:  #{comment.claimNumber}
+                if comment.eobDate
+                  p EOB date: #{comment.eobDate.toDateString()}
+                if comment.paymentNumber
+                  p Payment number:  #{comment.paymentNumber}
+                if comment.paymentDate
+                  p Payment date: #{comment.paymentDate.toDateString()}

@@ -2,6 +2,7 @@
 
 var Visit = App.model('visit');
 var Carrier = App.model('carrier');
+var Comment = App.model('comment');
 
 function index(req, res) {
   Visit.find(function(err, visits){
@@ -18,51 +19,60 @@ function index(req, res) {
 
 function overview(req, res) {
   var visitNumber = req.params.visitNumber;
-  Visit.find({visitNumber: visitNumber}, function(err, v){
+  Visit.findOne({visitNumber: visitNumber}, function(err, v){
     if (err) throw err;
+    if (!v) console.log('No visit found for the visit ' + visitNumber + '!');
 
-    v = v[0];
+    Comment.find({visitNumber: visitNumber}, function(err, comments) {
+      if (err) throw err;
+      if (!comments) console.log('No comments found for the visit ' + visitNumber + '!');
 
-    if (!v) console.log('No visit found for the visit provided!');
-
-    res.render('visits/overview', {
-      title: v.visitNumber + ' | SYNERGEN', // TODO: fix bug here
-      visit: v
+      res.render('visits/overview', {
+	title: v.visitNumber + ' | SYNERGEN', // TODO: fix bug here
+	visit: v,
+	comments: comments
+      });
     });
   });
 }
 
 function editGet(req, res) {
   var visitNumber = req.params.visitNumber;
-  res.render('visits/edit', {
-    title: 'Edit Visit ' + visitNumber,
-    visitNumber: visitNumber
-  })
-}
-
-function editPost(req, res) {
-  console.log(req.body)
-  var visitNumber = req.params.visitNumber;
-  Visit.findOneAndUpdate({visitNumber: visitNumber}, {
-    comments: {
-      author: '',
-      body: req.body.comment,
-      created: Date.now,
-      modified: Date.now
-    },
-    carrier: {
-      name: '',
-      cob: '',
-      claimNumber: req.body.claimNumber,
-      eobDate: req.body.eobDate,
-      checkNumber: req.body.checkNumber,
-      checkDate: req.body.checkDate
-    }
-  }, function(err, visit) {
+  Visit.findOne({visitNumber: visitNumber}, function(err, visit) {
     if (err) throw err;
 
-    res.redirect('back');
-  })
+    res.render('visits/edit', {
+      title: 'Edit Visit ' + visitNumber,
+      visitNumber: visitNumber,
+      visit: visit
+    });
+  });
+}
+
+function editPost(req, res) {	// TODO: include for carrier and group number
+  console.log(req.body)
+  var visitNumber = req.params.visitNumber;
+  console.log(visitNumber);
+  var comment = new Comment({
+    visitNumber: visitNumber,
+    body: req.body.comment,
+    claimNumber: req.body.claimNumber,
+    eobDate: req.body.eobDate,
+    paymentNumber: req.body.paymentNumber,
+    paymentDate: req.body.paymentDate,
+    modified: new Date()
+  });
+
+  Visit.findOneAndUpdate({visitNumber: visitNumber}, {status: req.body.status}, function(err) {
+    if (err) throw err;
+  });
+
+  comment.save(function(err){
+    if (err)
+      res.status(422).send('Problem: ' + err.message);
+
+    res.redirect('/visits/' + visitNumber);
+  });
 }
 
 function createGet(req, res) {
@@ -94,22 +104,27 @@ function createGet(req, res) {
 function createPost(req, res) {
   console.log(req.body);
   var tmp = req.body;
+  var tmpa = [];
+  tmp.carrierName = tmp.carrierName.filter(Boolean); // remove empty strings
+  tmp.carrierName.forEach(function(carrier, i) {
+    tmpa.push(i);
+  });
   var v = new Visit({
     visitNumber: tmp.visitNumber,
     billType: tmp.billType,
     cpt: tmp.cpt,
     unitCharge: tmp.unitCharge,
-    // carrier: tmp.carrierName[0], // TODO: include secondary et al.
+    carrier: tmp.carrierName,
+    cob: tmpa,
     specimenCode: tmp.specimenCode
   });
 
-  v.markModified('lines');
   v.save(function(err){
     if (err)
       res.status(422).send('Problem: ' + err.message);
 
     res.redirect('/visits/' + req.body.visitNumber);
-  })
+  });
 }
 
 module.exports = {

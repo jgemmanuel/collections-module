@@ -39,7 +39,7 @@ function generateComment() {
   var tmpc = [];
   var str;
 
-  tmpa = ['collectionComment', 'claimNumber', 'eobDate', 'checkNumber', 'checkDate'];
+  tmpa = ['collectionComment', 'claimNumber', 'eobDate', 'paymentNumber', 'paymentDate'];
   str = ['', 'Claim #', 'EOB date', 'Check&thinsp;/&thinsp;EFT number', 'Check&thinsp;/&thinsp;Eft date'];
 
   tmpa.forEach(function(el, index){

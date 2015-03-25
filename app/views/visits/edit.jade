@@ -8,9 +8,23 @@ block body
         .panel.panel-default.row
             .panel-body
               .col-xs-6
-                p Insert line item details here.
-                p PR line items
-                p PR amounts
+                table.table.table-hover
+                  thead
+                    tr
+                      th CPT
+                      th Charge
+                      th Status
+                  tbody
+                    each cpt,index in visit.cpt
+                      tr
+                        td #{cpt}
+                        td #{visit.unitCharge[index]}
+                        td
+                          select.form-control(name="status")
+                            option
+                            option Paid
+                            option PR1
+                            option CO50
 
               .col-xs-6
                 .form-group
@@ -35,11 +49,11 @@ block body
                 .form-group
                   label.control-label.col-xs-5 Check&thinsp;/&thinsp;EFT number
                   .col-xs-7
-                    input.form-control(type="text" id="checkNumber" name="checkNumber")
+                    input.form-control(type="text" id="paymentNumber" name="paymentNumber")
                 .form-group
                   label.control-label.col-xs-5 Check&thinsp;/&thinsp;EFT date
                   .col-xs-7
-                    input.form-control(type="date" min="2010-01-02" id="checkDate" name="checkDate")
+                    input.form-control(type="date" min="2010-01-02" id="paymentDate" name="paymentDate")
                 .form-group
                   label.control-label.col-xs-5 Group number
                   .col-xs-7

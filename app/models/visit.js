@@ -3,26 +3,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var localCarrierSchema = new Schema({
-  name: String,
-  cob: String,
-  claimNumber: {type: String, trim: true},
-  eobDate: Date,
-  checkNumber: {type: Number, trim: true},
-  checkDate: Date
-  // paid lines
-});
-
 var localArchiveSchema = new Schema({
   author: String,
   document: String,
-  created: {type: Date, default: Date.now},
-  modified: Date
-});
-
-var Comment = new Schema({
-  author: String,
-  body: String,
   created: {type: Date, default: Date.now},
   modified: Date
 });
@@ -34,10 +17,9 @@ var visitSchema = new Schema({
   cpt: [{type: String, trim: true}],
   unitCharge: [{type: String, trim: true}],
   status: [String],
-  code: [String],
-  carrier: [localCarrierSchema],
-  archive: [localArchiveSchema],
-  comments: [Comment],
+  carrier: [String],
+  cob: [String],
+  archived: Boolean,
   created: {type: Date, default: Date.now},
   modified: [{type: Date, author: String}]
 });

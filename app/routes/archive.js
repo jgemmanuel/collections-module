@@ -1,6 +1,7 @@
 'use strict'
 
 var Document = App.model('document');
+var Visit = App.model('visit');
 var custom = App.require('custom');
 
 function index(req, res) {
@@ -16,21 +17,27 @@ function index(req, res) {
   });
 }
 
-function create(req, res) {
+function createGet(req, res) {
   var visitNumber = req.params.visitNumber;
   var tmpa = visitNumber && custom.isInt(visitNumber) ? 'archive/create' : 'error/general';
-  res.render(tmpa, {
-    title: 'Create an outbound document for visit ' + visitNumber,
-    visitNumber: visitNumber
+  Visit.findOne({visitNumber: visitNumber}, function(err, visit) {
+    if (err) throw err;
+
+    res.render(tmpa, {
+      title: 'Create an outbound document for visit ' + visitNumber,
+      visitNumber: visitNumber,
+      carriers: visit.carrier
+    });
   });
 }
 
-function addNew(req, res) {
+function createPost(req, res) {
   console.log(req.body);
   var data = {
     visitNumber: req.params.visitNumber,
     body: req.body.editor,
-    type: req.body.type
+    type: req.body.type,
+    carrier: req.body.carrier
   };
   var d = new Document(data);
 
@@ -38,12 +45,16 @@ function addNew(req, res) {
     if (err)
       res.status(422).send('Problem: ' + err.message);
 
-    res.redirect('/archive');
+    Visit.findOneAndUpdate({visitNumber: data.visitNumber}, {archived: true}, function(err) {
+      if (err) throw err;
+
+      res.redirect('/archive');
+    });
   });
 }
 
 module.exports = {
   index: index,
-  create: create,
-  addNew: addNew
+  createGet: createGet,
+  createPost: createPost
 }

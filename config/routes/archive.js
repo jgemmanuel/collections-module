@@ -8,8 +8,8 @@ function ArchiveRoutes(app) {
   archiveRouter.route('/')
     .get(archiveHandlers.index);
   archiveRouter.route('/:visitNumber')
-    .get(archiveHandlers.create)
-    .post(archiveHandlers.addNew);
+    .get(archiveHandlers.createGet)
+    .post(archiveHandlers.createPost);
   app.use('/archive', archiveRouter);
 }
 
